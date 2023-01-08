@@ -3,8 +3,6 @@
 
 Minimum Text Markup Language simplifies &lt;>&lt;/> based languages.
 
-Disclaimer: As no software actually supports it you need to parse it first so you can use it - [You can do this here](http://example.com)
-
 Here is how you write it:
 
 ```
@@ -53,10 +51,10 @@ Now, let's compare this example with what it would be with <> notations (and som
 </div>
 
 ```
-I've had this idea while being once again unable to sleep.
+## Now, here are some things you should know about:
 
-So that's it, I think it simplifies a lot and it comunicates better - I mean, is just like some programing languages.
+- As no software actually supports it, you need to parse it first so you can use it - [You can do this here](http://example.com)
+- The word $ value $ (without spaces) is reserved, sorry.
+- You shouldn't write code inside this - The parser will treat it just like it treats everything.
 
-As I've had the idea, I should also create the parser that will output it as a <> language so you can use it like so.
 
-I do think markdown also translates well into html, but it has some caveats.
