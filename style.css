@@ -1,0 +1,44 @@
+body {
+  background-color: black;
+  color: red;
+  text-align: center;
+  
+}
+
+div {
+  display: flex;
+  flex-direction: column;
+  margin-left: 40vw;
+  margin-right: 40vw;
+  padding: 0;
+  height: 80vh;
+}
+
+textarea {
+  color: red;
+  background-color: black;
+  border: medium solid red;
+  flex-grow:2;
+  outline: none;
+  padding: 8px;
+  margin-bottom: 0;
+}
+
+button {
+  display: block;
+  margin: auto;
+  background: none;
+  color: red;
+  width: 100%;
+  border: medium solid red;
+  font-weight: bold;
+  height: 32px;
+}
+
+button:hover {
+  border-width: thick;
+}
+
+button:active {
+  border-width: medium;
+}
