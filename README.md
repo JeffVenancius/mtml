@@ -3,7 +3,7 @@
 
 Minimum Text Markup Language simplifies &lt;>&lt;/> based languages.
 
-Disclaimer: This is a general purpose subset, which means you have to parse later - [You can do this here](http://example.com)
+Disclaimer: As no software actually supports it you need to parse it first so you can use it - [You can do this here](http://example.com)
 
 Here is how you write it:
 
