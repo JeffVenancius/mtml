@@ -53,8 +53,5 @@ Now, let's compare this example with what it would be with <> notations (and som
 ```
 ## Now, here are some things you should know about:
 
-- As no software actually supports it, you need to parse it first so you can use it - [You can do this here](http://example.com)
-- The word $ value $ (without spaces) is reserved, sorry.
-- You shouldn't write code inside this - The parser will treat it just like it treats everything.
-
-
+- As no software actually supports it, you need to parse it first so you can use it - [You can do this here.](http://example.com)
+- You can write code here as long as you prefix every line with a ' or " - so the parser won't read it as a tag.
