@@ -1,5 +1,4 @@
 # mtml
-## TODO - add link to parser here!!!!
 
 Minimum Text Markup Language simplifies &lt;>&lt;/> based languages.
 
@@ -11,13 +10,13 @@ div:
     "This is a paragraph inside a div.
   p:
     'As you can see, indentation is important (it should be tabs), you write the content inside of it by putting " or ' after the :
-    div: 'But you can write it on the same line too (I don't like it, but hey, why not?).
+    div: 'But you can write it on the same line too (I don't like it, but hey, why not?). (not 100% yet)
 
 
       inventedTag class="this-is-a-example-of-how-you-can-pass-parameters-to-a-tag:
-        'the only thing you should be aware of is not to mess = and : up
+        'the only thing you should be aware of is not to mess = and : up when outside a string
         'You don't need to pass the content all in the same line (though the parser will read it as if it was), just keep putting 'at the
-        'begining and you'll be ready to go. Want to actually render ' at the begining? Just write '' instead of '.
+        'begining and you'll be ready to go. Want to actually render ' at the begining? Just write '' instead of '. (won't work for tags yet)
 
         ifYouDontWannaCloseATag justDont="put_the_:_at_the_end"
 ```
@@ -34,7 +33,7 @@ Now, let's compare this example with what it would be with <> notations (and som
   <div> But you can write it on the same line too (I don't like it, but hey, why not?) ((I won't do this here 'cause you'll be lost))
 
     <inventedTag class="this-is-a-example-of-how-you-can-pass-parameters-to-a-tag>
-      the only thing you should be aware of is not to mess = and : up ((same))
+      the only thing you should be aware of is not to mess = and : up when outside a string ((same))
       You don't need to pass the content all in the same line (though the parser will read it as if it was),((same)) just keep putting 'at the
       begining and you'll be ready to go. Want to actually render ' at the begining? Just write '' instead of '.(not here)
 
