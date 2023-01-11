@@ -33,6 +33,7 @@ button {
   border: medium solid red;
   font-weight: bold;
   height: 32px;
+  cursor: pointer;
 }
 
 button:hover {
@@ -41,4 +42,23 @@ button:hover {
 
 button:active {
   border-width: medium;
+}
+
+h1 {
+margin:0;
+}
+a h2{
+padding:0;
+margin:16px;
+}
+
+a {
+display:inline-block;
+color:red;
+text-decoration:none;
+cursor:pointer;
+}
+
+a:hover {
+  text-decoration-line:underline;
 }

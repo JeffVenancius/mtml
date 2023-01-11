@@ -65,7 +65,7 @@ function getUntabed(txt) {
 }
 
 
-function countTabs(txt) { // P.S - not tabbed items should be read as one so everything muist be offseted.
+function countTabs(txt) {
 return txt.split('\t').length
 }
 
@@ -96,7 +96,6 @@ function convertIndentation(txt) {
   let twoDots = new RegExp(TWO_DOTS)
   let openQuote = new RegExp(OPEN_QUOTE)
   let newTxt = []
-  // let countTotalTabs = getTotalTabs(txt)
   let cascade = []
   newTxt = txt.slice()
 
@@ -140,10 +139,12 @@ function closeTag(txt) {
 
 function parse2mtml() {
   let txt = textArea.value;
-  txt = txt.split('\n')
-  txt = getSingleLineQuotes(txt);
-  txt = convertIndentation(txt)
-  txt = txt.join('\n')
-  textArea.value = txt
+  if (txt) {
+    txt = txt.split('\n')
+    txt = getSingleLineQuotes(txt);
+    txt = convertIndentation(txt)
+    txt = txt.join('\n')
+    textArea.value = txt
   }
+}
 
