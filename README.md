@@ -20,10 +20,6 @@ div:
         'begining and you'll be ready to go. Want to actually render ' at the begining? Just write '' instead of '.
 
         ifYouDontWannaCloseATag justDont="put_the_:_at_the_end"
-
-        You don't need to put all tag parameters into a single line either, as long as you DON'T put ' at the begining,
-        You'll be ready to go - Disclaimer: writing like this will transform new lines into spaces, don't want that? same old \ .
-
 ```
 
 Now, let's compare this example with what it would be with <> notations (and some comments in (())double parenthesis):
