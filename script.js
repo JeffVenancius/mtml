@@ -20,22 +20,15 @@ Copyright (c) 2023 Jefferson Venancius
  THE SOFTWARE.
  */
 
-// TODO - if it's greater?
-// TODO - if it's opened?
-// TODO - if '
-// I'm working on convertIndentation !!!!!
 
 
 let textArea = document.querySelector('textarea');
 
- // Needed Regexes
-const READABLE_CHARS = /[^\\|\s]/
-const FIRST_TAB = /^\t[^\\|\s]/
+// Needed Regexes
 const NOT_TWO_DOTS = /[^:| ].*/ 
 const TWO_DOTS = /: *$/
 const OPEN_QUOTE = / *['|"]/
 const TABS = /[^<| |'|"][\t]*/
-const SELF_CLOSED_TAG = /[^'|"| |\t]./
 
 function preventTab(e) { // Thanks to Ben Borgers for that.
   if (e.keyCode === 9) {
@@ -66,35 +59,16 @@ function getSingleLineQuotes(splittedTxt){
   return putItBackArray
 }
 
-function searchFirstInstanceOf(strArray, pattern) {
-  let isItThere = new RegExp(pattern)
-  let firstInstance = ''
-  for (i = 0; i < strArray.length; i++) {
-    if (isItThere.test(strArray[i])) {
-      firstInstance = strArray[i]
-      break
-    }
-  }
-  return strArray.indexOf(firstInstance)
-}
 
 function getUntabed(txt) {
   return txt.split('\t')[txt.split('\t').length-1]
 }
 
+
 function countTabs(txt) { // P.S - not tabbed items should be read as one so everything muist be offseted.
 return txt.split('\t').length
 }
 
-function getTotalTabs(txt) {
-  let numberOfTabs = 0
-
-  for (let i = 0; i < txt.length; i++) {
-    let tabsCounted = countTabs(txt[i])
-    if (tabsCounted > numberOfTabs) {numberOfTabs = tabsCounted}
-  }
-  return numberOfTabs
-}
 
 function getTabs(tabsNumber, endOfTabs) {
   let tabs = ''
@@ -105,67 +79,6 @@ function getTabs(tabsNumber, endOfTabs) {
   return tabs + endOfTabs
 }
 
-function conversion(txt) {
-  // let twoDots = new RegExp(TWO_DOTS)
-  let openQuote = new RegExp(OPEN_QUOTE)
-  if (openQuote.test(txt)) {
-      return "'" + txt.replace(OPEN_QUOTE, "")
-  // if (twoDots.test(txt)) {
-  //   return '<' + txt + '>'
-  // } else if (openQuote.test(txt)) {
-  //     return "'" + txt.replace(OPEN_QUOTE, "")
-  // } else {
-  //   return txt // tag without closing.
-  }
-  return '<' + txt + '>'
-}
-
-function sanatize(txt, mark) {
-  if (mark == '<') {
-
-    txt = getTabs(countTabs(txt), '<') + getUntabed(txt)
-    txt = txt.replace(':>', '>')
-  } else if (mark == '$') {
-    txt = txt.replace('$value$', '')
-    txt = getTabs(countTabs, '') + getUntabed(txt)
-  } else {
-    txt = getTabs(countTabs(txt), '<') + getUntabed(txt) + '>'
-  }
-  return txt
-}
-
-function compareArrays(prevArray, nextArray) {
-  // if (firstArr.length == secondArr.length) // could do that but I do know they are so... I won't.
-  for (let i = 0; i < prevArray.length; i++) {
-    if (prevArray[i] !== nextArray[i]) {
-      return i
-    }
-  }
-  return false
-}
-
-function dealWithLine(txt) {
-  switch (txt[0]) {
-    case '<':
-      txt = txt.replace(':>', '>')
-      break
-    case '^':
-      txt = txt.replace('^', '</')
-      break
-    case "'":
-      txt = txt.replace("'", "")
-      break
-    default:
-      txt = ' ' + txt
-  }
-      txt = getTabs(countTabs(txt), txt[0] == ' ' ? '': txt[0]) + getUntabed(txt)
-  return txt
-}
-
-
-function filtering(cascadeArr) {
-  return cascadeArr
-  }
 
 function getCascade(txt, i) {
       for (let ij = i; ij < txt.length; ij++) {
@@ -178,64 +91,59 @@ function getCascade(txt, i) {
   return ''
 }
 
+
 function convertIndentation(txt) {
   let twoDots = new RegExp(TWO_DOTS)
   let openQuote = new RegExp(OPEN_QUOTE)
   let newTxt = []
-  let countTotalTabs = getTotalTabs(txt)
+  // let countTotalTabs = getTotalTabs(txt)
   let cascade = []
   newTxt = txt.slice()
-
 
   for (let i = 0; i < txt.length; i++) {
     if (twoDots.test(txt[i])) {
       cascade.push(getCascade(txt, i))
-      newTxt[i] = getTabs(countTabs(txt[i]), '<') + getUntabed(txt[i].replace(':','>')) 
+      newTxt[i] = createTag(txt[i], '<')
     } else if (openQuote.test(txt[i])) {
       newTxt[i] = txt[i].replace(OPEN_QUOTE, "")
     } else {
-      newTxt[i] = getTabs(countTabs(txt[i]), '<') + getUntabed(txt[i]) + '>' 
+      newTxt[i] = createTag(txt[i], '<')
     }
   }
 
   cascade = cascade.filter(i => i != "")
+
   for (let i = 0; i < cascade.length; i++) {
     newTxt.splice(cascade[i][1], 0, cascade[i][0])
+
   for (let j = i; j < cascade.length; j++) {
     if (cascade[i][1] < cascade[j][1]) {
       cascade[j][1] += 1
-    }
+      }
     }
   }
-  if (twoDots.test(txt[txt.length - 1])) { newTxt.push(getTabs(countTabs(txt[txt.length - 1]), '</') + getUntabed(txt[txt.length - 1].replace(':','>'))) }
+  if (twoDots.test(txt[txt.length - 1])) { newTxt.push(createTag(txt[txt.length - 1], '</')) }
   return newTxt
 }
 
-function createChevrons(txt) {
-  let regex = new RegExp(/: */)
-  txt = txt.map(i => {
-    if (regex.test(i)) {
-      i = i.spit(':')[0]
-      return '<' + i + '>'
-    }
-    return i
-  })
-  return txt
+function createTag(txt, how) {
+return closeTag(getTabs(countTabs(txt), how) + getUntabed(txt))
 }
 
-function markOpenedTags(txt) {
-  txt = txt.map(i => {
-
-  })
-  return txt
+function closeTag(txt) {
+  let twoDots = new RegExp(TWO_DOTS)
+  if (twoDots.test(txt)) {
+    return txt.replace(':', '>')
+  }
+  return txt + '>'
 }
 
 function parse2mtml() {
   let txt = textArea.value;
-  let splittedTxt = txt.split('\n')
-  splittedTxt = getSingleLineQuotes(splittedTxt);
-  splittedTxt = convertIndentation(splittedTxt)
-  splittedTxt = splittedTxt.join('\n')
-  console.log(splittedTxt)
+  txt = txt.split('\n')
+  txt = getSingleLineQuotes(txt);
+  txt = convertIndentation(txt)
+  txt = txt.join('\n')
+  textArea.value = txt
   }
 
