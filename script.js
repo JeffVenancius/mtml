@@ -25,7 +25,6 @@ Copyright (c) 2023 Jefferson Venancius
 let textArea = document.querySelector('textarea');
 
 // Needed Regexes
-const NOT_TWO_DOTS = /[^:| ].*/ 
 const TWO_DOTS = /: *$/
 const OPEN_QUOTE = / *['|"]/
 const TABS = /[^<| |'|"][\t]*/
@@ -41,22 +40,6 @@ function preventTab(e) { // Thanks to Ben Borgers for that.
       'end'
     )
   }
-}
-
-function getSingleLineQuotes(splittedTxt){
-  let putItBackArray = [];
-  for (i = 0; i < splittedTxt.length; i++) {
-    let phrase = splittedTxt[i]
-    let lastLetters = phrase.substr(phrase.search(":"))
-    let matched = lastLetters.match((NOT_TWO_DOTS))
-    if (matched) {
-      splittedTxt[i] = phrase.replace(matched,'')
-      putItBackArray.push(splittedTxt[i] + matched[0])
-      } else {
-        putItBackArray.push(splittedTxt[i])
-      }
-    }
-  return putItBackArray
 }
 
 
@@ -75,7 +58,6 @@ function getTabs(tabsNumber, endOfTabs) {
   for (let i = 0; i <= tabsNumber; i++) {
     tabs += '\t'
   }
-  if (!tabs) endOfTabs = ''
   return tabs + endOfTabs
 }
 
@@ -84,7 +66,9 @@ function getCascade(txt, i) {
       for (let ij = i; ij < txt.length; ij++) {
         if (i != ij){
           if (countTabs(txt[ij]) <= countTabs(txt[i])) {
-            return [getTabs(countTabs(txt[i]), '</') + getUntabed(txt[i].replace(':','>')) , ij]
+            // return [getTabs(countTabs(txt[i]), '</') + getUntabed(txt[i].replace(':','>')) , ij]
+            let pure = txt[i].substr(0,txt[i].search(' '))
+            return [createTag(pure, '</'), ij]
           }
         }
       }
@@ -103,15 +87,14 @@ function convertIndentation(txt) {
     if (twoDots.test(txt[i])) {
       cascade.push(getCascade(txt, i))
       newTxt[i] = createTag(txt[i], '<')
+      console.log(newTxt)
     } else if (openQuote.test(txt[i])) {
       newTxt[i] = txt[i].replace(OPEN_QUOTE, "")
     } else {
       newTxt[i] = createTag(txt[i], '<')
     }
   }
-
   cascade = cascade.filter(i => i != "")
-
   for (let i = 0; i < cascade.length; i++) {
     newTxt.splice(cascade[i][1], 0, cascade[i][0])
 
@@ -126,23 +109,23 @@ function convertIndentation(txt) {
 }
 
 function createTag(txt, how) {
-return closeTag(getTabs(countTabs(txt), how) + getUntabed(txt))
+return closeTag(getTabs(countTabs(txt)-2, how) + getUntabed(txt))
 }
 
 function closeTag(txt) {
   let twoDots = new RegExp(TWO_DOTS)
   if (twoDots.test(txt)) {
-    return txt.replace(':', '>')
+    return txt.replace(TWO_DOTS, '>')
   }
   return txt + '>'
 }
 
 function parse2mtml() {
-  let txt = textArea.value;
+  let txt = textArea.value + '\n';
   if (txt) {
     txt = txt.split('\n')
-    txt = getSingleLineQuotes(txt);
     txt = convertIndentation(txt)
+    txt = txt.filter(t => t != '<>' && t != '</>')
     txt = txt.join('\n')
     textArea.value = txt
   }
