@@ -9,14 +9,13 @@ div:
   p:
     "This is a paragraph inside a div.
   p:
-    'As you can see, indentation is important (it should be tabs), you write the content inside of it by putting " or ' after the :
-    div: 'But you can write it on the same line too (I don't like it, but hey, why not?). (not 100% yet)
+    'As you can see, indentation is important (it should be tabs), you write the content inside of it by putting " or ' at the begining.
 
 
       inventedTag class="this-is-a-example-of-how-you-can-pass-parameters-to-a-tag:
         'the only thing you should be aware of is not to mess = and : up when outside a string
         'You don't need to pass the content all in the same line (though the parser will read it as if it was), just keep putting 'at the
-        'begining and you'll be ready to go. Want to actually render ' at the begining? Just write '' instead of '. (won't work for tags yet)
+        'begining and you'll be ready to go. Want to actually render ' at the begining? Just write '' instead of '.
 
         ifYouDontWannaCloseATag justDont="put_the_:_at_the_end"
 ```
@@ -29,20 +28,14 @@ Now, let's compare this example with what it would be with <> notations (and som
     This is a paragraph inside a div.</p>
 
   <p>
-    As you can see, indentation is important (it should be tabs), you write the content inside of it by putting " or ' after the :</p> ((not here)).
-  <div> But you can write it on the same line too (I don't like it, but hey, why not?) ((I won't do this here 'cause you'll be lost))
+    As you can see, indentation is important (it should be tabs), you write the content inside of it by putting " or ' at the begining</p> ((not here)).
 
     <inventedTag class="this-is-a-example-of-how-you-can-pass-parameters-to-a-tag>
-      the only thing you should be aware of is not to mess = and : up when outside a string ((same))
-      You don't need to pass the content all in the same line (though the parser will read it as if it was),((same)) just keep putting 'at the
-      begining and you'll be ready to go. Want to actually render ' at the begining? Just write '' instead of '.(not here)
-
+      <p>the only thing you should be aware of is not to mess = and : up when outside a string ((same))</p>
+      <p>You don't need to pass the content all in the same line (though the parser will read it as if it was),((same)) just keep putting 'at the</p>
+      <p>begining and you'll be ready to go. Want to actually render ' at the begining? Just write '' instead of '.(not here)</p>
       <ifYouDontWannaCloseATag justDont="put_the_:_at_the_end">(not here)
-    
-    You don't need to put all tag parameters into a single line either((same)), as long as you DON'T put ' at the begining,((not here))
-    You'll be ready to go - Disclaimer: writing like this will transform new lines into spaces, don't want that? same old \(same, I think?)
-  </inventedTag>
-  </div>
+    </inventedTag>
 </div>
 
 ```
